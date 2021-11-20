@@ -99,7 +99,9 @@ namespace BluetoothAudioPlayback
         {
             await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                var device = this.ViewModel.RemoteAudioDevices.FirstOrDefault(iDevice => iDevice.AudioPlaybackConnection.DeviceId == sender.DeviceId);
+                var device = this.ViewModel.RemoteAudioDevices.FirstOrDefault(iDevice => iDevice.AudioPlaybackConnection?.DeviceId == sender.DeviceId);
+                if (device is null) return;
+
                 var listViewItem = this.DeviceListView.ContainerFromItem(device);
                 var connectToggleSwitch = VisualTreeHelper.GetChild(
                                                 VisualTreeHelper.GetChild(
